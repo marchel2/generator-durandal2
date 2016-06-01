@@ -3,7 +3,9 @@
     "version": "1.0.0",
     "description": "<%= applicationName %>",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+      "test": "echo \"Error: no test specified\" && exit 1"
+        <% if (transpiler === 'typescript') { %>
+      ,"postinstall": "typings i" <% } %>
     },
     "author": "<%= author %>",
     "license": "ISC",
@@ -20,10 +22,11 @@
         ,"run-sequence": "^1.1.5"
         ,"vinyl-paths": "^2.1.0"
         <% if (transpiler === 'typescript') { %>
+        ,"typescript": "^1.8.10"
         ,"gulp-tsb": "^1.10.4"
         ,"gulp-tslint": "^4.3.4"
         ,"tslint": "^3.2.0"
-        ,"typings":"^0.7.12"
+        ,"typings":"^0.8.1"
         <% } %>
     },
     "dependencies": {
@@ -35,7 +38,7 @@
         <% if (features.normalize) { %>,"normalize.css":"^4.1.1"<% } %>
         <% if (features.fontawesome) { %>,"font-awesome": "^4.5.0"<% } %>
         <% if (features.bootstrap) { %>,"bootstrap": "^3.3.6"<% } %>
-        <% if (features.bootstrap) { %>,"bootstrap-material-design": "^4.0.1"<% } %>
+        <% if (features.bootstrap) { %>,"bootstrap-material-design": "^0.5.9"<% } %>
     },
     "private": true
 }

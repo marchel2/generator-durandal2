@@ -26,7 +26,7 @@ define(['knockout', 'durandal/system', 'durandal/app'], function (ko, system, ap
                 dfd.resolve([
                     {
                         title: "Create A ViewModel",
-                        content: "Creating a viewmodel is as easy as calling <strong>yo durandal:viewmodel.</strong>",
+                        content: "Creating a viewmodel is as easy as calling <strong>yo durandal2:viewmodel.</strong>",
                         arguments: ['{name}', '{typescript|es5}'],
                         options: ['--transient'],
                         details: "Providing the --transient flag will generate a viewmodel with a transient lifecyle."

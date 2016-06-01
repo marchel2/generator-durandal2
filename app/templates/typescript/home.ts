@@ -1,18 +1,13 @@
 import * as ko from 'knockout';
 import * as system from 'durandal/system';
 import * as app from 'durandal/app';
+import {IFeature} from 'interfaces';
 
 /**
  * Home VM
  */
 
-interface IFeature{
-    title:string,
-    content:string,
-    arguments?:string[],
-    options?:string[],
-    details?:string
-}
+
 
 class Home {
     public features = ko.observableArray();
@@ -41,7 +36,7 @@ class Home {
                 dfd.resolve([
                     {
                         title: "Create A ViewModel",
-                        content: "Creating a viewmodel is as easy as calling <strong>yo durandal:viewmodel.</strong>",
+                        content: "Creating a viewmodel is as easy as calling <strong>yo durandal2:viewmodel.</strong>",
                         arguments:['{name}','{typescript|es5}'],
                         options:['--transient'],
                         details:"Providing the --transient flag will generate a viewmodel with a transient lifecyle."

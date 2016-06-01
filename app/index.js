@@ -14,23 +14,26 @@ var tsDir = 'typescript/';
 var viewDir = 'view/';
 var rootDir = '';
 
+var transpilers = ['typescript', 'es5'];
+var DEF_TRANSPILER = transpilers[0];
+
+
 var DurandalGenerator = generators.extend({
     // note: arguments and options should be defined in the constructor.
     constructor: function() {
         generators.apply(this, arguments);
-        var transpilers = ['typescript', 'es5'];
 
         this.argument('applicationName', { type: String, required: false, desc: 'the name of the application' });
-        this.argument('transpiler', { type: String, required: false, store: true, defaults: transpilers[0], desc: 'ES5 or TypeScript' });
+        this.argument('transpiler', { type: String, required: false, store: true, defaults: DEF_TRANSPILER, desc: 'ES5 or TypeScript' });
         this.transpiler = this.transpiler.toLowerCase();
 
-
+        //Make sure the provided transpiler string is valid, if not use default
         if (transpilers.indexOf(this.transpiler) === -1) {
-            this.transpiler = transpilers[0];
+            this.transpiler = DEF_TRANSPILER;
         }
 
     },
-    info: function() {
+    initializing: function () {
         this.log(yosay(chalk.cyan('Generate a SPA with Durandal,TypeScript and Gulp!')));
     },
     prompting: function askFor() {
@@ -56,7 +59,7 @@ var DurandalGenerator = generators.extend({
                         value: 'es5'
                     },
                     {
-                        name: 'TypeScript (1.8.2)',
+                        name: 'TypeScript',
                         value: 'typescript'
                     }
                 ]
@@ -104,7 +107,7 @@ var DurandalGenerator = generators.extend({
             done();
         }.bind(this));
     },
-    init: function() {
+    status: function() {
         this.log('Creating "%s" project', chalk.cyan(this.applicationName));
         this.log('Language Features "%s"', chalk.cyan(this.transpiler));
     },
@@ -135,7 +138,9 @@ var DurandalGenerator = generators.extend({
         //copy package manifest
         this.fs.copyTpl(this.templatePath(rootDir + '_package.json'), 'package.json', this);
 
-        this.fs.copy(this.templatePath(contentDir + 'app.css'), 'css/app.css');
+        //copy css
+        this.fs.copy(this.templatePath(contentDir + 'app.css'), this.destinationPath('css/app.css'));
+        this.fs.copy(this.templatePath(contentDir + 'nav.css'), this.destinationPath('css/nav.css'));
 
     },
     _typescript: function _typescript() {
@@ -144,6 +149,7 @@ var DurandalGenerator = generators.extend({
         this.fs.copyTpl(this.templatePath(jsDir + '_main.js'), 'app/main.js', this);
         this.fs.copy(this.templatePath(tsDir + 'shell.ts'), 'app/viewmodels/shell.ts');
         this.fs.copy(this.templatePath(tsDir + 'home.ts'), 'app/viewmodels/home.ts');
+        this.fs.copy(this.templatePath(tsDir + 'interfaces.ts'), 'app/interfaces.ts');
         this._tsconfig();
         this._typings();
 
@@ -179,7 +185,6 @@ var DurandalGenerator = generators.extend({
     },
 
     //copy the typings.json file for 'typings'
-    //Temporary: copy the typings_local folder over if custom typings were used.
     _typings: function _typings() {
         this.fs.copy(this.templatePath(tsDir + 'typings.json'), 'typings.json');
         mkdirp('typings_local');
