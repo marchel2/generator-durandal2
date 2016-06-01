@@ -1,6 +1,6 @@
 {
   "name": "generator-durandal2",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Scaffold a SPA with durandal, gulp, TypeScript or ES6",
   "main": "app/index.js",
   "scripts": {
