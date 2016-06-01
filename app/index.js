@@ -140,7 +140,6 @@ var DurandalGenerator = generators.extend({
 
         //copy css
         this.fs.copy(this.templatePath(contentDir + 'app.css'), this.destinationPath('css/app.css'));
-        this.fs.copy(this.templatePath(contentDir + 'nav.css'), this.destinationPath('css/nav.css'));
 
     },
     _typescript: function _typescript() {
